@@ -18,7 +18,21 @@ Tecnologias Utilizadas.
 - Github.
 
 Ruta del Ejecutable.
+
 target/prueba-0.0.1-SNAPSHOT.jar
+
+Script Pruebas POST en Postman.
+
+{
+    "nombre":"",
+    "apellido":"",
+    "tipo_de_documento":"",
+    "numero_de_documento" :"0",
+    "fecha_de_nacimiento" :"0000-00-00",
+    "fecha_de_vinculacion" :"0000-00-00",
+    "cargo" :"",
+    "salario" : "0"
+}
 
 Modo de Ejecucion.
 
