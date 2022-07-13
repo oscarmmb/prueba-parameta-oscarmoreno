@@ -25,40 +25,42 @@ import com.github.cliftonlabs.json_simple.JsonObject;
 
 public class empleadoController {
 
-	
-
 	@Autowired
 	empleadoService empleadoService;
 
+	//lista todos los empleados
 	@GetMapping("")
-	public List<Empleado> list() { //lista todos los usuarios
+	public List<Empleado> list() { 
 		return empleadoService.listAllEmpleados();
 
 	}
 
+	//muestra el empleado con el id solicitado
 	@GetMapping("/{id}")
-	public ResponseEntity<Empleado> get(@PathVariable Integer id) { //muestra el usuario con el id solicitado
+	public ResponseEntity<Empleado> get(@PathVariable Integer id) { 
 		try {
 			Empleado empleado = empleadoService.getEmpleado(id);
 			return new ResponseEntity<Empleado>(empleado, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<Empleado>(HttpStatus.NOT_FOUND); //id de usuario inexistente
+			return new ResponseEntity<Empleado>(HttpStatus.NOT_FOUND); 
 		}
 	}
-
+	
+	//Si el usuario es mayor de edad y los datos ingresados no estan vacios, crea un nuevo empleado.
 	@PostMapping("/")
 	public ResponseEntity<JsonObject> add(@RequestBody Empleado user) {
 		try {
-			if ((empleadoService.isCampoVacio(user)) && (empleadoService.calcularDate(user) >= 18)) { //valida si el usuario es mayor de edad y los campos no estan vacios
-				JsonObject json = empleadoService.crearJSON(); //crea objeto JSON
+			//valida si el usuario es mayor de edad y los campos no estan vacios
+			JsonObject json = empleadoService.crearJSON();
+			if ((empleadoService.isCampoVacio(user)) && (empleadoService.calcularDate(user) >= 18)) { 
 				empleadoService.saveEmpleado(user); //crea un empleado nuevo
-				return new ResponseEntity<JsonObject>(json, HttpStatus.OK); //retorna objeto en estructura JSON con edad del empleado y tiempo de vinculacion
-			} else { //se ha cometido un error al ingresar los datos
-				JsonObject json = new JsonObject();
-				if(empleadoService.isCampoVacio(user)==false) {	//error de campo vacio				
+				return new ResponseEntity<JsonObject>(json, HttpStatus.OK); 
+			} else { 
+				
+				if(empleadoService.isCampoVacio(user)==false) {					
 					json.put("Error","Alguno de los campos ingresados se encuentra vacio.");
 				}
-				if(empleadoService.calcularDate(user) < 18) { //error empleado menor de edad
+				if(empleadoService.calcularDate(user) < 18) { 
 					json.put("Error","La persona ingresada es menor de edad.");
 				}
 
@@ -76,20 +78,22 @@ public class empleadoController {
 		
 	}
 
+	//busca si la id del empleado existe.
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@RequestBody Empleado user, @PathVariable Integer id) { //busca si la id del empleado existe
+	public ResponseEntity<?> update(@RequestBody Empleado user, @PathVariable Integer id) {
 		try {
 			empleadoService.getEmpleado(id);
 			user.setId(id);
 			empleadoService.saveEmpleado(user);
-			return new ResponseEntity<>(HttpStatus.OK); //empleado existe
+			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND); //empleado no existe
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
+	
+	//Elimina empleado a traves de su id.
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Integer id) { //elimina empleado
+	public void delete(@PathVariable Integer id) { 
 		empleadoService.deleteEmpleado(id);
 	}
 }

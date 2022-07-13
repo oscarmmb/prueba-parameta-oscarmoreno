@@ -9,21 +9,22 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "empleados")
 public class Empleado {
-	private int id; //variable de identificacion del empleado
-	private String nombre; //variable con nombre del empleado
-	private String apellido; //variable con apellido del empleado 
-	private String tipo_de_documento; //variable con tipo de documento del empleado
-	private int numero_de_documento; //variable con numero de documento del empleado
-	private java.sql.Date fecha_de_nacimiento; //variable con fecha de nacimiento del empleado
-	private java.sql.Date fecha_de_vinculacion; //variable con fecha de vinculacion del empleado
-	private String cargo; //variable con cargo del empleado
-	private double salario; //variable con salario del empleado
+	//Variables de Empleado.
+	private int id; 
+	private String nombre; 
+	private String apellido; 
+	private String tipo_de_documento; 
+	private int numero_de_documento; 
+	private java.sql.Date fecha_de_nacimiento; 
+	private java.sql.Date fecha_de_vinculacion; 
+	private String cargo; 
+	private double salario; 
 
 	public Empleado() {
 	}
 
 	public Empleado(int id, String nombre, String apellido, String tipo_de_documento, int numero_de_documento,
-			java.sql.Date fecha_de_nacimiento, java.sql.Date fecha_de_vinculacion, String cargo, double salario) { //define objeto empleado
+			java.sql.Date fecha_de_nacimiento, java.sql.Date fecha_de_vinculacion, String cargo, double salario) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -39,6 +40,7 @@ public class Empleado {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	//Encapsulamiento de variables.	
+	
 	public int getId() {
 		return id;
 	}
